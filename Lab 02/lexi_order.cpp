@@ -1,5 +1,7 @@
+//rep: https://github.com/hyanquiv/CC2
 #include <iostream>
 using namespace std;
+
 int str_len_I (const char *str)
 {
     int len=0;

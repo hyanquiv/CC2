@@ -1,3 +1,4 @@
+//rep: https://github.com/hyanquiv/CC2
 #include <iostream>
 using namespace std;
 
@@ -26,6 +27,8 @@ void Twist_R(int array[],int start,int end)
 
 int main()
 {
+    /*Debido a que estoy programando en una maquina virtual trabajar 
+    con 1000000 de datos suele superar la memoria asignada a esta misma en el metodo recursivo*/
     int len = 100000;
     int arr[len];
     for (int i=0;i<len;i++)
