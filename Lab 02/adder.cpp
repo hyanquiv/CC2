@@ -1,4 +1,6 @@
+
 //rep: https://github.com/hyanquiv/CC2
+
 #include <iostream>
 using namespace std;
 
@@ -10,22 +12,19 @@ int Adder_I(const int array[],int len)
     return adder;
 }
 
-int Adder_R(const int array[],int len)
+int Adder_RTail(const int array[],int len,int counter = 0)
 {
     if(len==0)
-        return 0;
-    return array[len-1] + Adder_R(array,--len);
+        return counter;
+    return Adder_RTail(array,len-1,counter+array[len-1]);
 }
 
 int main()
 {
-    /*Debido a que estoy programando en una maquina virtual trabajar 
-    con 1000000 de datos suele superar la memoria asignada a esta misma en el metodo recursivo*/
-    int len = 100000;
+    int len = 1000000;
     int arr[len];
     for (int i=0;i<len;i++)
         arr[i]=1;
     cout<<Adder_I(arr,len)<<endl;
-    cout<<Adder_R(arr,len)<<endl;
-   
+    cout<<Adder_RTail(arr,len)<<endl;
 }
