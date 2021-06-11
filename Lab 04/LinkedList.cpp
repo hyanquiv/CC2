@@ -12,7 +12,7 @@ LinkedList::~LinkedList()
     Node *iterator = head;
     while (head != nullptr)
     {
-        iterator = head->next;
+        iterator = head->getNext();
         delete head;
         head = iterator;
     }
@@ -27,39 +27,23 @@ bool LinkedList::isEmpty()
         return false;
 }
 
-void LinkedList::insert(int data, int position)
+void LinkedList::insert(int info)
 {
-    Node *toAdd = new Node(data);
-    if (position >= length)
+    Node *toAdd = new Node(info);
+    if (isEmpty())
+        head = toAdd;
+    else if (info < head->getData())
     {
-        if (isEmpty())
-            head = toAdd;
-        else
-        {
-            Node *iterator = head;
-            while (iterator->next != nullptr)
-            {
-                iterator = iterator->next;
-            }
-            iterator->next = toAdd;
-        }
-    }
-    else if (position == 1)
-    {
-        toAdd->next = head;
+        toAdd->setNext(head);
         head = toAdd;
     }
-    else if (position < length)
+    else
     {
-        Node *nodeIterator = head;
-        int positionIterator = 0;
-        while (position - 2 != positionIterator)
-        {
-            nodeIterator = nodeIterator->next;
-            positionIterator++;
-        }
-        toAdd->next = nodeIterator->next;
-        nodeIterator->next = toAdd;
+        Node *iterator = head;
+        while (iterator->getNext() != nullptr && iterator->getNext()->getData() < info)
+            iterator = iterator->getNext();
+        toAdd->setNext(iterator->getNext());
+        iterator->setNext(toAdd);
     }
     length++;
 }
@@ -75,15 +59,15 @@ void LinkedList::remove(int position)
         if (position == length)
         {
             Node *iterator = head;
-            while (iterator->next->next != nullptr)
-                iterator = iterator->next;
-            delete iterator->next;
-            iterator->next = nullptr;
+            while (iterator->getNext()->getNext() != nullptr)
+                iterator = iterator->getNext();
+            delete iterator->getNext();
+            iterator->setNext(nullptr);
         }
         else if (position == 1)
         {
             Node *iterator = head;
-            iterator->next = head;
+            head = iterator->getNext();
             delete iterator;
         }
         else if (position > 1 && position < length)
@@ -92,39 +76,27 @@ void LinkedList::remove(int position)
             int positionIterator = 0;
             while (position - 2 != positionIterator)
             {
-                nodeIterator = nodeIterator->next;
+                nodeIterator = nodeIterator->getNext();
                 positionIterator++;
             }
-            Node *toDelete = nodeIterator->next;
-            nodeIterator->next = nodeIterator->next->next;
+            Node *toDelete = nodeIterator->getNext();
+            nodeIterator->setNext(nodeIterator->getNext()->getNext());
             delete toDelete;
         }
         length--;
     }
 }
 
-void LinkedList::print()
-{
-    Node *iterator = head;
-    std::cout << "head -> ";
-    while (iterator)
-    {
-        std::cout << iterator->data << " -> ";
-        iterator = iterator->next;
-    }
-    std::cout << "nullptr\n";
-    std::cout << "Tamaño: " << length << "\n";
-}
-
 std::ostream &operator<<(std::ostream &output, const LinkedList &o)
 {
     Node *iterator = o.head;
-    std::cout << "head -> ";
+    output << "head -> ";
     while (iterator)
     {
-        std::cout << iterator->data << " -> ";
-        iterator = iterator->next;
+        output << iterator->getData() << " -> ";
+        iterator = iterator->getNext();
     }
-    std::cout << "nullptr\n";
-    std::cout << "Tamaño: " << o.length << "\n";
+    output << "nullptr\n";
+    output << "Tamaño: " << o.length << "\n";
+    return output;
 }

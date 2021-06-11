@@ -11,9 +11,8 @@ public:
     LinkedList();
     ~LinkedList();
     bool isEmpty();
-    void insert(int,int);
+    void insert(int);
     void remove(int);
-    void print();
     friend std::ostream &operator<<(std::ostream &output, const LinkedList &o);
 };
 

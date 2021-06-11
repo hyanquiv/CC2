@@ -3,11 +3,16 @@
 
 class Node
 {
-public:
+private:
     int data;
     Node *next;
+
+public:
     Node(int data);
     ~Node() = default;
+    int getData();
+    void setNext(Node *);
+    Node *getNext();
 };
 
 #endif
